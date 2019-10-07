@@ -21,16 +21,32 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
     const usableData = [];
     for (key of Object.keys(data)) {
       usableData.push(data[key]);
-      console.log("pushed ", data[key]);
     }
-    console.log(usableData);
     const template = `
-    <ul>${usableData.map(
-      row => `<li><img src=${row.avatarUrl}> ${row.name} ${row.count}</li>`
-    )}
-    </ul>`;
-    console.log(template);
-    this.root.innerText = template;
+    <table>
+      <thead>
+        <tr>
+          <th colspan="3">Public contributions at Zenika this month</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${usableData.map(
+          row =>
+            `<tr>
+              <td>
+                <img class="thumbnail" src=${row.avatarUrl}>
+              </td>
+              <td>
+                ${row.name}
+              </td>
+              <td>
+                ${row.count}
+              </td>
+            </tr>`
+        ).join("")}
+      </tbody>
+    </table>`;
+    this.root.innerHTML = template;
 
     // stylesvar is a special property containing the global media theme.
     // You should use it to have a consistent style accross all the media.
