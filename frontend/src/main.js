@@ -23,7 +23,7 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
       usableData.push(data[key]);
     }
     const template = `
-    <table>
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
       <thead>
         <tr>
           <th colspan="3">Public contributions at Zenika this month</th>
