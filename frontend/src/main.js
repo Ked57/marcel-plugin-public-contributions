@@ -5,7 +5,27 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
   }
 
   async render() {
-    const { backend_url, stylesvar = {} } = this.props;
+    const {
+      backend_url,
+      body_bg_color,
+      body_txt_color,
+      body_font,
+      row_border_color,
+      first_txt_color,
+      stylesvar = {}
+    } = this.props;
+
+    document.body.style.backgroundColor = body_bg_color;
+    document.body.style.color = body_txt_color;
+    document.body.style.fontFamily = body_font;
+    const rowElements = document.querySelectorAll(".row");
+    for (let i = 0; i < rowElements.length; i++) {
+      elements[i].style.borderTop = `1px solid ${row_border_color}`;
+    }
+    const firstElements = document.querySelectorAll(".first");
+    for (let i = 0; i < firstElements.length; i++) {
+      elements[i].style.color = first_txt_color;
+    }
 
     const response = await fetch(backend_url, {
       method: "GET",
@@ -34,14 +54,16 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
         <div class="row-item">${first.name}</div>
         <div class="row-item">${first.count}</div>
       </div>`}
-        ${usableData.map(
-          row =>
-            `<div class="row">
+        ${usableData
+          .map(
+            row =>
+              `<div class="row">
               <div class="row-item"><img class="thumbnail" src=${row.avatarUrl}></div>
               <div class="row-item">${row.name}</div>
               <div class="row-item">${row.count}</div>
             </div>`
-        ).join("")}
+          )
+          .join("")}
       </div>
     </div>`;
     this.root.innerHTML = template;
@@ -58,4 +80,11 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
 Marcel.init(MarcelPluginPublicContributions);
 
 // uncomment this line to try the plugin in a browser :
-// Marcel.changeProps({ backend_url: "http://localhost:8080" })
+// Marcel.changeProps({
+//   backend_url: "http://localhost:8080",
+//   body_bg_color: "#f2f2f2",
+//   body_txt_color: "#4c4c4c",
+//   body_font: "Helvetica, Arial, sans-serif",
+//   row_border_color: "#d2d6d8",
+//   first_txt_color: "#b51432"
+// });

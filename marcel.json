@@ -10,6 +10,36 @@
         "description": "",
         "type": "string",
         "value": "http://localhost:3000"
+      },
+      {
+        "name": "body_bg_color",
+        "description": "",
+        "type": "string",
+        "value": "#f2f2f2"
+      },
+      {
+        "name": "body_txt_color",
+        "description": "",
+        "type": "string",
+        "value": "#4c4c4c"
+      },
+      {
+        "name": "body_font",
+        "description": "",
+        "type": "string",
+        "value": "Helvetica, Arial, sans-serif"
+      },
+      {
+        "name": "row_border_color",
+        "description": "",
+        "type": "string",
+        "value": "#d2d6d8"
+      },
+      {
+        "name": "first_txt_color",
+        "description": "",
+        "type": "string",
+        "value": "#b51432"
       }
     ]
   }
