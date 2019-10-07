@@ -1,0 +1,16 @@
+{
+  "name": "Public contributions",
+  "description": "",
+  "eltName": "marcel-plugin-public-contributions",
+  "icon": "picture_in_picture_alt",
+  "frontend": {
+    "props": [
+      {
+        "name": "backend_url",
+        "description": "",
+        "type": "string",
+        "value": "http://localhost:3000"
+      }
+    ]
+  }
+}
