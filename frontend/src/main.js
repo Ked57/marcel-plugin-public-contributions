@@ -5,9 +5,9 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
   }
 
   async render() {
-    const { firstName, stylesvar = {} } = this.props;
+    const { backend_url, stylesvar = {} } = this.props;
 
-    const response = await fetch("http://localhost:3000", {
+    const response = await fetch(backend_url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -22,30 +22,28 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
     for (key of Object.keys(data)) {
       usableData.push(data[key]);
     }
+    const first = usableData.shift();
     const template = `
-    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-      <thead>
-        <tr>
-          <th colspan="3">Public contributions at Zenika this month</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div class="container">
+      <div class="header">
+        Public contributions at Zenika this month
+      </div>
+      <div class="info-container">
+        ${`<div class="row first">
+        <div class="row-item"><img class="thumbnail" src=${first.avatarUrl}></div>
+        <div class="row-item">${first.name}</div>
+        <div class="row-item">${first.count}</div>
+      </div>`}
         ${usableData.map(
           row =>
-            `<tr>
-              <td>
-                <img class="thumbnail" src=${row.avatarUrl}>
-              </td>
-              <td>
-                ${row.name}
-              </td>
-              <td>
-                ${row.count}
-              </td>
-            </tr>`
+            `<div class="row">
+              <div class="row-item"><img class="thumbnail" src=${row.avatarUrl}></div>
+              <div class="row-item">${row.name}</div>
+              <div class="row-item">${row.count}</div>
+            </div>`
         ).join("")}
-      </tbody>
-    </table>`;
+      </div>
+    </div>`;
     this.root.innerHTML = template;
 
     // stylesvar is a special property containing the global media theme.
@@ -60,4 +58,4 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
 Marcel.init(MarcelPluginPublicContributions);
 
 // uncomment this line to try the plugin in a browser :
-// Marcel.changeProps({ firstName: 'Marcel' })
+// Marcel.changeProps({ backend_url: "http://localhost:8080" })

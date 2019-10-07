@@ -1,5 +1,5 @@
 const Koa = require("koa");
-const cors = require("@koa/cors")
+const cors = require("@koa/cors");
 const pMemoize = require("p-memoize");
 const fetch = require("node-fetch");
 const { gql } = require("apollo-boost");
@@ -8,6 +8,7 @@ const app = new Koa();
 
 const TTL = process.env.TTL || 1000;
 const GITHUB_OAUTH = process.env.GITHUB_OAUTH || "";
+const PORT = Number(process.env.port) || 8080;
 
 const client = new ApolloClient({
   uri: `https://api.github.com/graphql?access_token=${GITHUB_OAUTH}`,
@@ -93,6 +94,13 @@ app.use(async ctx => {
   ctx.body = await memFetchGithub("Zenika");
 });
 
-const server = app.listen(3000);
+setInterval(async () => {
+  await memFetchGithub("Zenika");
+  console.log("Refreshing cache");
+}, TTL);
+memFetchGithub("Zenika");
+console.log("Refreshing cache");
+
+const server = app.listen(PORT);
 
 console.log(`Server started on port ${server.address().port}`);

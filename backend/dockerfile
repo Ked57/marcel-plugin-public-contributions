@@ -1,0 +1,15 @@
+FROM node:lts
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV TTL GITHUB_OAUTH PORT
+
+EXPOSE 8080
+
+ENTRYPOINT [ "npm", "start" ]
