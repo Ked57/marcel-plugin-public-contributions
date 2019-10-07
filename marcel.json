@@ -40,6 +40,11 @@
         "description": "",
         "type": "string",
         "value": "#b51432"
+      },{
+        "name": "top_message",
+        "description": "",
+        "type": "string",
+        "value": "Public contributions at Zenika this month"
       }
     ]
   }
