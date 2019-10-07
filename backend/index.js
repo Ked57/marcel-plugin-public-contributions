@@ -1,4 +1,5 @@
 const Koa = require("koa");
+const cors = require("@koa/cors")
 const pMemoize = require("p-memoize");
 const fetch = require("node-fetch");
 const { gql } = require("apollo-boost");
@@ -85,6 +86,8 @@ const fetchAndComputeGithubData = async organization =>
   computeGithubData(await fetchGithub(organization));
 
 const memFetchGithub = pMemoize(fetchAndComputeGithubData, { maxAge: TTL });
+
+app.use(cors());
 
 app.use(async ctx => {
   ctx.body = await memFetchGithub("Zenika");
