@@ -73,14 +73,19 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
       stylesvar = {}
     } = this.props;
 
+    this.root.innerHTML = this.computeTemplate(
+      await this.fetchData(backend_url),
+      top_message
+    );
+
     document.body.style.backgroundColor = body_bg_color;
     document.body.style.color = body_txt_color;
     document.body.style.fontFamily = body_font;
     const headerElements = document.querySelectorAll(".header");
     for (let i = 0; i < headerElements.length; i++) {
-      elements[i].style.borderBottom = `1px solid ${row_border_color}`;
-      elements[i].style.backgroundColor = body_bg_color;
-      elements[i].style.color = body_txt_color;
+      headerElements[i].style.borderBottom = `1px solid ${row_border_color}`;
+      headerElements[i].style.backgroundColor = body_bg_color;
+      headerElements[i].style.color = body_txt_color;
     }
     const rowElements = document.querySelectorAll(".row");
     for (let i = 0; i < rowElements.length; i++) {
@@ -90,10 +95,6 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
     for (let i = 0; i < firstElements.length; i++) {
       elements[i].style.color = first_txt_color;
     }
-    this.root.innerHTML = this.computeTemplate(
-      await this.fetchData(backend_url),
-      top_message
-    );
 
     setTimeout(() => this.autoScroll(), 5000);
 
@@ -118,8 +119,8 @@ Marcel.init(MarcelPluginPublicContributions);
 
 // uncomment this line to try the plugin in a browser :
 Marcel.changeProps({
-  backend_url: "http://localhost:8080",
-  body_bg_color: "#f2f2f2",
+  backend_url: "http://localhost:8080", 
+  body_bg_color: "black",
   body_txt_color: "#4c4c4c",
   body_font: "Helvetica, Arial, sans-serif",
   row_border_color: "#d2d6d8",
