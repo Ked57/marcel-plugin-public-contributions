@@ -16,30 +16,7 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
     }, 50);
   }
 
-  async render() {
-    const {
-      backend_url,
-      top_message,
-      body_bg_color,
-      body_txt_color,
-      body_font,
-      row_border_color,
-      first_txt_color,
-      stylesvar = {}
-    } = this.props;
-
-    document.body.style.backgroundColor = body_bg_color;
-    document.body.style.color = body_txt_color;
-    document.body.style.fontFamily = body_font;
-    const rowElements = document.querySelectorAll(".row");
-    for (let i = 0; i < rowElements.length; i++) {
-      elements[i].style.borderTop = `1px solid ${row_border_color}`;
-    }
-    const firstElements = document.querySelectorAll(".first");
-    for (let i = 0; i < firstElements.length; i++) {
-      elements[i].style.color = first_txt_color;
-    }
-
+  async fetchData(backend_url) {
     const response = await fetch(backend_url, {
       method: "GET",
       headers: {
@@ -50,13 +27,16 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
       console.error("no response from server");
       return;
     }
-    const data = await response.json();
+    return await response.json();
+  }
+
+  computeTemplate(data, top_message) {
     const usableData = [];
     for (key of Object.keys(data)) {
       usableData.push(data[key]);
     }
     const first = usableData.shift();
-    const template = `
+    return `
     <div class="container">
       <div class="header">
         ${top_message}
@@ -79,9 +59,51 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
           .join("")}
       </div>
     </div>`;
-    this.root.innerHTML = template;
+  }
+
+  async render() {
+    const {
+      backend_url,
+      top_message,
+      body_bg_color,
+      body_txt_color,
+      body_font,
+      row_border_color,
+      first_txt_color,
+      stylesvar = {}
+    } = this.props;
+
+    document.body.style.backgroundColor = body_bg_color;
+    document.body.style.color = body_txt_color;
+    document.body.style.fontFamily = body_font;
+    const headerElements = document.querySelectorAll(".header");
+    for (let i = 0; i < headerElements.length; i++) {
+      elements[i].style.borderBottom = `1px solid ${row_border_color}`;
+      elements[i].style.backgroundColor = body_bg_color;
+      elements[i].style.color = body_txt_color;
+    }
+    const rowElements = document.querySelectorAll(".row");
+    for (let i = 0; i < rowElements.length; i++) {
+      elements[i].style.borderTop = `1px solid ${row_border_color}`;
+    }
+    const firstElements = document.querySelectorAll(".first");
+    for (let i = 0; i < firstElements.length; i++) {
+      elements[i].style.color = first_txt_color;
+    }
+    this.root.innerHTML = this.computeTemplate(
+      await this.fetchData(backend_url),
+      top_message
+    );
 
     setTimeout(() => this.autoScroll(), 5000);
+
+    setInterval(async () => {
+      this.root.innerHTML = this.computeTemplate(
+        await this.fetchData(backend_url),
+        top_message
+      );
+      console.log("Fetched updated data");
+    }, 3600000);
 
     // stylesvar is a special property containing the global media theme.
     // You should use it to have a consistent style accross all the media.

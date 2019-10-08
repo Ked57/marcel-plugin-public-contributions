@@ -20,12 +20,17 @@ body {
   width: 100%;
   font-size: 1.5em;
   padding: 1em;
+  position: fixed;
+  background-color: #f2f2f2;
+  color: #4c4c4c;
+  border-bottom: 1px solid #d2d6d8;
 }
 
 .info-container {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: 5em;
 }
 
 .row {
