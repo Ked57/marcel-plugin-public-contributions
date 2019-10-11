@@ -130,7 +130,7 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
           row_border_color,
           first_txt_color
         ),
-      360
+      3600000
     );
 
     // stylesvar is a special property containing the global media theme.
