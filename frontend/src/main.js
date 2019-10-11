@@ -118,12 +118,12 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
 Marcel.init(MarcelPluginPublicContributions);
 
 // uncomment this line to try the plugin in a browser :
-Marcel.changeProps({
-  backend_url: "http://localhost:8080", 
-  body_bg_color: "#f2f2f2",
-  body_txt_color: "#4c4c4c",
-  body_font: "Helvetica, Arial, sans-serif",
-  row_border_color: "#d2d6d8",
-  first_txt_color: "#b51432",
-  top_message: "Public contributions of Zenika Members during hacktoberfest !"
-});
+// Marcel.changeProps({
+//   backend_url: "http://localhost:8080", 
+//   body_bg_color: "#f2f2f2",
+//   body_txt_color: "#4c4c4c",
+//   body_font: "Helvetica, Arial, sans-serif",
+//   row_border_color: "#d2d6d8",
+//   first_txt_color: "#b51432",
+//   top_message: "Public contributions of Zenika Members during hacktoberfest !"
+// });

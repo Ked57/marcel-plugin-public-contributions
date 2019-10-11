@@ -96,7 +96,7 @@ app.use(async ctx => {
 
 setInterval(async () => {
   await memFetchGithub("Zenika");
-  console.log("Refreshing cache");
+  console.log("Refreshed cache");
 }, TTL);
 memFetchGithub("Zenika");
 console.log("Refreshing cache");
