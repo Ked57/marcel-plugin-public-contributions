@@ -61,18 +61,15 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
     </div>`;
   }
 
-  async render() {
-    const {
-      backend_url,
-      top_message,
-      body_bg_color,
-      body_txt_color,
-      body_font,
-      row_border_color,
-      first_txt_color,
-      stylesvar = {}
-    } = this.props;
-
+  async refresh(
+    backend_url,
+    top_message,
+    body_bg_color,
+    body_txt_color,
+    body_font,
+    row_border_color,
+    first_txt_color
+  ) {
     this.root.innerHTML = this.computeTemplate(
       await this.fetchData(backend_url),
       top_message
@@ -95,16 +92,46 @@ class MarcelPluginPublicContributions extends Marcel.Plugin {
     for (element of firstElements) {
       element.style.color = first_txt_color;
     }
+    console.log("Fetched updated data");
+  }
+
+  async render() {
+    const {
+      backend_url,
+      top_message,
+      body_bg_color,
+      body_txt_color,
+      body_font,
+      row_border_color,
+      first_txt_color,
+      stylesvar = {}
+    } = this.props;
+
+    await this.refresh(
+      backend_url,
+      top_message,
+      body_bg_color,
+      body_txt_color,
+      body_font,
+      row_border_color,
+      first_txt_color
+    );
 
     setTimeout(() => this.autoScroll(), 5000);
 
-    setInterval(async () => {
-      this.root.innerHTML = this.computeTemplate(
-        await this.fetchData(backend_url),
-        top_message
-      );
-      console.log("Fetched updated data");
-    }, 3600000);
+    setInterval(
+      () =>
+        this.refresh(
+          backend_url,
+          top_message,
+          body_bg_color,
+          body_txt_color,
+          body_font,
+          row_border_color,
+          first_txt_color
+        ),
+      360
+    );
 
     // stylesvar is a special property containing the global media theme.
     // You should use it to have a consistent style accross all the media.
@@ -119,7 +146,7 @@ Marcel.init(MarcelPluginPublicContributions);
 
 // uncomment this line to try the plugin in a browser :
 // Marcel.changeProps({
-//   backend_url: "http://localhost:8080", 
+//   backend_url: "http://localhost:8080",
 //   body_bg_color: "#f2f2f2",
 //   body_txt_color: "#4c4c4c",
 //   body_font: "Helvetica, Arial, sans-serif",
